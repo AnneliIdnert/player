@@ -4,10 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
@@ -32,16 +34,61 @@ public class MainActivity extends AppCompatActivity {
         Button volumeUp = (Button) findViewById(R.id.volume_button_up);
         Button volumeDown = (Button) findViewById(R.id.volume_button_down);
 
-        volumeUp.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Up(v);
+        volumeUp.setOnTouchListener(new View.OnTouchListener() {
+            private Handler mHandler;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch(event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(mAction, 500);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(mAction);
+                        mHandler = null;
+                        break;
+                }
+                return false;
             }
+
+            Runnable mAction = new Runnable() {
+                @Override public void run() {
+                    Up();
+                    mHandler.postDelayed(this, 500);
+                }
+            };
         });
 
-        volumeDown.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Down(v);
+        volumeDown.setOnTouchListener(new View.OnTouchListener() {
+            private Handler mHandler;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_DOWN:
+                        if (mHandler != null) return true;
+                        mHandler = new Handler();
+                        mHandler.postDelayed(mAction, 500);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if (mHandler == null) return true;
+                        mHandler.removeCallbacks(mAction);
+                        mHandler = null;
+                        break;
+                }
+                return false;
             }
+
+            Runnable mAction = new Runnable() {
+                @Override
+                public void run() {
+                    Down();
+                    mHandler.postDelayed(this, 500);
+                }
+            };
         });
     }
 
@@ -85,17 +132,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   public void Up(View v){
+   public void Up(){
        mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
                AudioManager.ADJUST_RAISE, AudioManager.FLAG_SHOW_UI);
     }
 
-    public void Down(View v){
+    public void Down(){
         mAudioManager.adjustStreamVolume(AudioManager.STREAM_MUSIC,
                 AudioManager.ADJUST_LOWER, AudioManager.FLAG_SHOW_UI);
     }
 
-    //TODO: UGLY TEST HACK TO SIMULATE HARDWARE MEDIA BUTTON
+    //TODO: UGLY TEST HACK TO BETTER SIMULATE HARDWARE MEDIA BUTTON
     public void handleMediaKeyEvent(KeyEvent keyEvent) {
     /*
      * Attempt to execute the following with reflection.
