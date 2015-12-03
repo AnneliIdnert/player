@@ -6,10 +6,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
 
-    <TextView android:text="Hello World!" android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView" />
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,14 +22,13 @@
         android:id="@+id/button2"
         android:onClick="Previous"
         android:layout_alignTop="@+id/button"
-        android:layout_toEndOf="@+id/textView" />
+         />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Up"
-        android:id="@+id/button3"
-        android:onClick="Up"
+        android:id="@+id/volume_button_up"
         android:layout_above="@+id/button"
         android:layout_centerHorizontal="true" />
 
@@ -41,8 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Down"
-        android:id="@+id/button4"
-        android:onClick="Down"
+        android:id="@+id/volume_button_down"
         android:layout_below="@+id/button"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>
