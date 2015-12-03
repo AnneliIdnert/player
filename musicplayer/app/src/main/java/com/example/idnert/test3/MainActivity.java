@@ -20,7 +20,6 @@ import java.util.TimerTask;
 public class MainActivity extends AppCompatActivity {
     private AudioManager mAudioManager;
     private String TAG = "TEST";
-
     Context context = this;
 
     @Override
@@ -33,6 +32,20 @@ public class MainActivity extends AppCompatActivity {
 
         Button volumeUp = (Button) findViewById(R.id.volume_button_up);
         Button volumeDown = (Button) findViewById(R.id.volume_button_down);
+
+        volumeUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Up();
+            }
+        });
+
+        volumeDown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Down();
+            }
+        });
 
         volumeUp.setOnTouchListener(new View.OnTouchListener() {
             private Handler mHandler;
